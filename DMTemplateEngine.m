@@ -738,16 +738,16 @@ DMTemplateBlockType;
 		tagType = DMTemplateIfTagType;
 	}
 	else
+    if([self _tag:tag isTagType:DMTemplateElseIfTagType]) {
+        // Tag is an alternative if statement
+        // e.g. elseif(condition)
+        tagType = DMTemplateElseIfTagType;
+    }
+    else
 	if([self _tag:tag isTagType:DMTemplateElseTagType]) {
 		// Tag is a simple else statement
 		// e.g. else
 		tagType = DMTemplateElseTagType;
-	}
-	else
-	if([self _tag:tag isTagType:DMTemplateElseIfTagType]) {
-		// Tag is an alternative if statement
-		// e.g. elseif(condition)
-		tagType = DMTemplateElseIfTagType;
 	}
 	else
 	if([self _tag:tag isTagType:DMTemplateEndIfTagType]) {
@@ -819,7 +819,7 @@ DMTemplateBlockType;
 	return self;
 }
 
-- (void)setConditionResult:(BOOL)flag {
+- (void)setResult:(BOOL)flag {
 	result = flag;
 	if(flag) {
 		isSolved = YES;
