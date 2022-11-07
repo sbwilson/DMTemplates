@@ -127,4 +127,29 @@
 	XCTAssertEqualObjects([engine renderAgainst:templateData], @"EE6E7B3FB4E475E4F6999DE3E9BB39CB", @"");
 }
 
+- (void)testIf_ElseIf_ElseLogic {
+    _engine.template = @"{% if(branch == \"IfBranch\") %}IfBranch{% elseif(branch == \"ElseIfBranch\") %}ElseIfBranch{% else %}ElseBranch{% endif %}";
+
+    // Create some test data to render against.
+    NSMutableDictionary* templateData;
+    
+    // Test 'if' branch
+    templateData = [NSMutableDictionary dictionary];
+    [templateData setObject:@"IfBranch" forKey:@"branch"];
+    
+    XCTAssertEqualObjects([_engine renderAgainst:templateData], @"IfBranch", @"");
+    
+    // Test 'elseif' branch
+    templateData = [NSMutableDictionary dictionary];
+    [templateData setObject:@"ElseIfBranch" forKey:@"branch"];
+    
+    XCTAssertEqualObjects([_engine renderAgainst:templateData], @"ElseIfBranch", @"");
+    
+    // Test 'else' branch
+    templateData = [NSMutableDictionary dictionary];
+    [templateData setObject:@"XXXX" forKey:@"branch"];
+    
+    XCTAssertEqualObjects([_engine renderAgainst:templateData], @"ElseBranch", @"");
+}
+
 @end
